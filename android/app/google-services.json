@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865058260337",
+    "project_id": "long-video-register-app",
+    "storage_bucket": "long-video-register-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865058260337:android:4b0449eda78a12f48922d0",
+        "android_client_info": {
+          "package_name": "com.example.long_video_register_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHDqpJrVRey7LNpBtsWwl5jDzQw4PVLVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
