@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:long_video_register_app/firebase_options.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -13,6 +11,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+
+  String text = "Login";
 
   @override
   void initState() {
@@ -32,70 +32,68 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
-        backgroundColor: Colors.blue,
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+        title: const Text(
+          "Login",
+          style: TextStyle(
+            color: Color.fromRGBO(234, 216, 177, 1),
+          ),
         ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            // case ConnectionState.none:
-            //   // TODO: Handle this case.
-            // case ConnectionState.waiting:
-            //   // TODO: Handle this case.
-            // case ConnectionState.active:
-            //   // TODO: Handle this case.
-            case ConnectionState.done:
-              return Center(
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: _emailController,
-                      autocorrect: false,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter your email',
-                      ),
-                    ),
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        final email = _emailController.text;
-                        final password = _passwordController.text;
-                        try {
-                          final userCredential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found') {
-                            print("User not found");
-                          } else if (e.code == 'wrong-password') {
-                            print("wrong password");
-                          } else if (e.code == 'invalid-credential') {
-                            print("invalid credential");
-                          }
-                        }
-                        // print(userCredential);
-                      },
-                      child: const Text("Login"),
-                    ),
-                  ],
-                ),
-              );
-            default:
-              return const Text('Loading...');
-          }
-        },
+        backgroundColor: const Color.fromRGBO(0, 31, 63, 1),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              controller: _emailController,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: 'Enter your email',
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: InputDecoration(
+                hintText: 'Enter your password',
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                final email = _emailController.text;
+                final password = _passwordController.text;
+                try {
+                  final userCredential = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: email, password: password);
+                  // print("shydhgasyud==============>");
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/pohui/', (route) => false);
+                } on FirebaseAuthException catch (e) {
+                  // text = "ZAEBALA";
+                  if (e.code == 'user-not-found') {
+                    print("User not found");
+                  } else if (e.code == 'wrong-password') {
+                    print("wrong password");
+                  } else if (e.code == 'invalid-credential') {
+                    print("invalid credential");
+                  }
+                }
+                // print(userCredential);
+              },
+              child: Text('Login'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/register/', (route) => false);
+              },
+              child: const Text('Register'),
+            ),
+          ],
+        ),
       ),
     );
   }
